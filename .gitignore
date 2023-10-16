@@ -44,6 +44,7 @@ node/
 
 # production
 /build
+/src/main/resources/static/built
 
 # misc
 .DS_Store
