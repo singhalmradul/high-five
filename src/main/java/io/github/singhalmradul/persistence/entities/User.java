@@ -40,49 +40,10 @@ public class User {
     @Column(name = "last_name", nullable = false)
     String lastName;
 
-    @Column(name = "bio")
-    String bio;
-
-    @Column(name = "profile_picture_url")
-    String profilePictureUrl;
-
-    @Column(name = "cover_picture_url")
-    String coverPictureUrl;
-
-    @Column(name = "location")
-    String location;
-
-    @Column(name = "website")
-    String website;
-
     @Column(name = "phone_number")
     String phoneNumber;
 
     @Column(name = "created_at", nullable = false)
     OffsetDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    OffsetDateTime updatedAt;
-
-    @Column(name = "last_login_at")
-    OffsetDateTime lastLoginAt;
-
-    @Column(name = "last_logout_at")
-    OffsetDateTime lastLogoutAt;
-
-    @Column(name = "is_private", nullable = false, columnDefinition = "boolean default false")
-    boolean isPrivate;
-
-    @Column(name = "is_deleted", nullable = false, columnDefinition = "boolean default false")
-    boolean isDeleted;
-
-    @Column(name = "is_banned", nullable = false, columnDefinition = "boolean default false")
-    boolean isBanned;
-
-    @Column(name = "is_suspended", nullable = false, columnDefinition = "boolean default false")
-    boolean isSuspended;
-
-    @Column(name = "is_online", nullable = false, columnDefinition = "boolean default false")
-    boolean isOnline;
 
 }
