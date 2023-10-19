@@ -1,6 +1,7 @@
 spring:
   datasource:
-    url: jdbc:postgresql://postgres:5432/high-five
+    # url: jdbc:postgresql://postgres:5432/high-five
+    url: jdbc:postgresql://localhost:5432/high-five
     username: postgres
     password: postgres
   jpa:
@@ -9,3 +10,5 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: update
     show-sql: true
+server:
+  port: 3000
