@@ -48,7 +48,7 @@ const Home = () => {
 			id: 5,
 			user: 'user16',
 			content:
-				'content: lorem ipsum dolor sit amet consectetur adipisicing elit.',
+				'content: lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!',
 			highfives: 4,
 			comments: 11,
 			shares: 5,
