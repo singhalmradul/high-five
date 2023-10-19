@@ -1,4 +1,4 @@
-package io.github.singhalmradul.persistence.entities;
+package io.github.singhalmradul.highfive.persistence.entities;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
