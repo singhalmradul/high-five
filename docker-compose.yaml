@@ -3,19 +3,19 @@ version: '3.8'
 services:
 
   postgres:
-    image: postgres:15
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=high-five
+    image: singhalmradul/high-five/postgres:0.0.1-SNAPSHOT
     ports:
       - 5432:5432
+    networks:
+      - posts-network
 
   naming-server:
     image: singhalmradul/high-five_naming-server:0.0.1-SNAPSHOT
     mem_limit: 768m
     ports:
       - 8761:8761
+    networks:
+      - posts-network
 
   gateway:
     image: singhalmradul/high-five_gateway:0.0.1-SNAPSHOT
@@ -24,6 +24,8 @@ services:
       - 8765:8765
     depends_on:
       - naming-server
+    networks:
+      - posts-network
 
   post-service:
     image: singhalmradul/high-five_posts-service:0.0.1-SNAPSHOT
@@ -33,3 +35,21 @@ services:
     depends_on:
       - postgres
       - naming-server
+    networks:
+      - posts-network
+
+  # frontend:
+  #   image: singhalmradul/high-five-frontend:0.0.1-SNAPSHOT
+  #   mem_limit: 768m
+  #   ports:
+  #     - 3000:3000
+  #   environment:
+  #     - REACT_APP_BACKEND_URL=http://gateway:8765
+  #   depends_on:
+  #     - gateway
+  #     - post-service
+  #   networks:
+  #     - posts-network
+
+networks:
+  posts-network:
