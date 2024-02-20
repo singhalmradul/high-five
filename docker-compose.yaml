@@ -7,7 +7,7 @@ services:
     ports:
       - 5432:5432
     networks:
-      - posts-network
+      - high-five-network
 
   naming-server:
     image: singhalmradul/high-five_naming-server:0.0.1-SNAPSHOT
@@ -15,7 +15,7 @@ services:
     ports:
       - 8761:8761
     networks:
-      - posts-network
+      - high-five-network
 
   gateway:
     image: singhalmradul/high-five_gateway:0.0.1-SNAPSHOT
@@ -25,18 +25,30 @@ services:
     depends_on:
       - naming-server
     networks:
-      - posts-network
+      - high-five-network
 
   post-service:
-    image: singhalmradul/high-five_posts-service:0.0.1-SNAPSHOT
+    image: singhalmradul/high-five_post-service:0.0.1-SNAPSHOT
     mem_limit: 768m
     ports:
       - 11111:11111
     depends_on:
       - postgres
       - naming-server
+      - user-service
     networks:
-      - posts-network
+      - high-five-network
+
+  user-service:
+    image: singhalmradul/high-five_user-service:0.0.1-SNAPSHOT
+    mem_limit: 768m
+    ports:
+      - 22222:22222
+    depends_on:
+      - postgres
+      - naming-server
+    networks:
+      - high-five-network
 
   # frontend:
   #   image: singhalmradul/high-five-frontend:0.0.1-SNAPSHOT
@@ -49,7 +61,7 @@ services:
   #     - gateway
   #     - post-service
   #   networks:
-  #     - posts-network
+  #     - high-five-network
 
 networks:
-  posts-network:
+  high-five-network:
