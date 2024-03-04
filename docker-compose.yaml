@@ -3,65 +3,62 @@ version: '3.8'
 services:
 
   postgres:
-    image: singhalmradul/high-five/postgres:0.0.1-SNAPSHOT
+    image: singhalmradul/high-five/postgres:0.1.0
     ports:
       - 5432:5432
     networks:
       - high-five-network
 
-  naming-server:
-    image: singhalmradul/high-five_naming-server:0.0.1-SNAPSHOT
+  service-registry:
+    image: singhalmradul/high-five_service-registry:0.1.0
     mem_limit: 768m
     ports:
       - 8761:8761
     networks:
       - high-five-network
 
-  gateway:
-    image: singhalmradul/high-five_gateway:0.0.1-SNAPSHOT
+  authorization-server:
+    image: singhalmradul/high-five_authorization-server:0.1.0
+    mem_limit: 768m
+    ports:
+      - 9000:9000
+    depends_on:
+      - service-registry
+    networks:
+      - high-five-network
+
+  reverse-proxy:
+    image: singhalmradul/high-five_reverse-proxy:0.1.0
     mem_limit: 768m
     ports:
       - 8765:8765
     depends_on:
-      - naming-server
+      - service-registry
     networks:
       - high-five-network
 
   post-service:
-    image: singhalmradul/high-five_post-service:0.0.1-SNAPSHOT
+    image: singhalmradul/high-five_post-service:0.1.0
     mem_limit: 768m
     ports:
       - 11111:11111
     depends_on:
       - postgres
-      - naming-server
+      - service-registry
       - user-service
     networks:
       - high-five-network
 
   user-service:
-    image: singhalmradul/high-five_user-service:0.0.1-SNAPSHOT
+    image: singhalmradul/high-five_user-service:0.1.0
     mem_limit: 768m
     ports:
       - 22222:22222
     depends_on:
       - postgres
-      - naming-server
+      - service-registry
     networks:
       - high-five-network
-
-  # frontend:
-  #   image: singhalmradul/high-five-frontend:0.0.1-SNAPSHOT
-  #   mem_limit: 768m
-  #   ports:
-  #     - 3000:3000
-  #   environment:
-  #     - REACT_APP_BACKEND_URL=http://gateway:8765
-  #   depends_on:
-  #     - gateway
-  #     - post-service
-  #   networks:
-  #     - high-five-network
 
 networks:
   high-five-network:
