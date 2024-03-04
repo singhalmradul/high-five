@@ -1,25 +1,28 @@
 #!/bin/bash
 
-echo building and running database
+echo building postgres
 docker pull postgres:15
 (
-	cd high-five_database
-	docker build -t singhalmradul/high-five/postgres:0.0.1-SNAPSHOT .
-	docker run -d singhalmradul/high-five/postgres:0.0.1-SNAPSHOT
+	cd high-five_database/
+	docker build -t singhalmradul/high-five/postgres:0.1.0 .
 )
 
-echo setting spring profile to dev
-export SPRING_PROFILES_ACTIVE=dev
-
-echo building naming-server
+echo building service-registry
 (
-	cd high-five_naming-server
+	cd high-five_service-registry
 	./mvnw spring-boot:build-image -DskipTests
 )
 
-echo building gateway
+echo building authorization-server
 (
-	cd high-five_gateway
+	cd high-five_authorization-server
+	./mvnw spring-boot:build-image -DskipTests
+)
+
+
+echo building reverse-proxy
+(
+	cd high-reverse-proxy
 	./mvnw spring-boot:build-image -DskipTests
 )
 
@@ -35,11 +38,8 @@ echo building user-service
 	./mvnw spring-boot:build-image -DskipTests
 )
 
-echo unsetting spring profile
-unset SPRING_PROFILES_ACTIVE
-
 echo stopping database
-docker stop $(docker ps -q --filter ancestor=singhalmradul/high-five/postgres:0.0.1-SNAPSHOT)
+docker stop $(docker ps -q --filter ancestor=singhalmradul/high-five/postgres:0.1.0)
 
 echo running high-five backend
 docker compose up --build
