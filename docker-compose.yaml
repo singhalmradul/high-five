@@ -1,11 +1,50 @@
-version: '3.8'
-
 services:
 
-  postgres:
-    image: singhalmradul/high-five/postgres:0.1.0
+  db-9000_01:
+    build: high-five_db/db-9000_01
+    image: singhalmradul/high-five_db-9000_01:0.1.0
+    mem_limit: 256m
     ports:
       - 5432:5432
+    networks:
+      - high-five-network
+
+  db-9000_02:
+    build: high-five_db/db-9000_02
+    image: singhalmradul/high-five_db-9000_02:0.1.0
+    mem_limit: 256m
+    ports:
+      - 5433:5432
+    networks:
+      - high-five-network
+
+  db-9000_03-22222_01:
+    build: high-five_db/db-9000_03-22222_01
+    image: singhalmradul/high-five_db-9000_03-22222_01:0.1.0
+    mem_limit: 256m
+    ports:
+      - 5434:5432
+    networks:
+      - high-five-network
+
+  db-22222_02:
+    build: high-five_db/db-22222_02
+    image: singhalmradul/high-five_db-22222_02:0.1.0
+    mem_limit: 256m
+    ports:
+      - 27017:27017
+    networks:
+      - high-five-network
+
+  primary-reverse-proxy:
+    build: high-five_primary-reverse-proxy
+    image: singhalmradul/high-five_primary-reverse-proxy:0.1.0
+    mem_limit: 768m
+    ports:
+      - 8080:80
+    depends_on:
+      - authorisation-server
+      - reverse-proxy
     networks:
       - high-five-network
 
@@ -17,13 +56,27 @@ services:
     networks:
       - high-five-network
 
-  authorization-server:
+  authorisation-server:
     image: singhalmradul/high-five_authorization-server:0.1.0
     mem_limit: 768m
     ports:
       - 9000:9000
     depends_on:
+      - db-9000_01
+      - db-9000_02
+      - db-9000_03-22222_01
       - service-registry
+    environment:
+      - EUREKA_URI=http://service-registry:8761/eureka
+      - DB_1_URL=jdbc:postgresql://db-9000_01:5432/high-five
+      - DB_1_USERNAME=postgres
+      - DB_1_PASSWORD=postgres
+      - DB_2_URL=jdbc:postgresql://db-9000_02:5432/high-five
+      - DB_2_USERNAME=postgres
+      - DB_2_PASSWORD=postgres
+      - DB_3_URL=jdbc:postgresql://db-9000_03-22222_01:5432/high-five
+      - DB_3_USERNAME=postgres
+      - DB_3_PASSWORD=postgres
     networks:
       - high-five-network
 
@@ -34,20 +87,24 @@ services:
       - 8765:8765
     depends_on:
       - service-registry
+      - authorisation-server
+    environment:
+      - EUREKA_URI=http://service-registry:8761/eureka
+      - AUTHORIZATION_SERVER_URI=http://authorisation-server:9000
     networks:
       - high-five-network
 
-  post-service:
-    image: singhalmradul/high-five_post-service:0.1.0
-    mem_limit: 768m
-    ports:
-      - 11111:11111
-    depends_on:
-      - postgres
-      - service-registry
-      - user-service
-    networks:
-      - high-five-network
+  # post-service:
+  #   image: singhalmradul/high-five_post-service:0.1.0
+  #   mem_limit: 768m
+  #   ports:
+  #     - 11111:11111
+  #   depends_on:
+  #     - postgres
+  #     - service-registry
+  #     - user-service
+  #   networks:
+  #     - high-five-network
 
   user-service:
     image: singhalmradul/high-five_user-service:0.1.0
@@ -55,8 +112,15 @@ services:
     ports:
       - 22222:22222
     depends_on:
-      - postgres
+      - db-9000_03-22222_01
+      - db-22222_02
       - service-registry
+    environment:
+      - EUREKA_URI=http://service-registry:8761/eureka
+      - DB_1_URL=jdbc:postgresql://db-9000_03-22222_01:5432/high-five
+      - DB_1_USERNAME=postgres
+      - DB_1_PASSWORD=postgres
+      - DB_2_URI=mongodb://db-22222_02:27017/user-service
     networks:
       - high-five-network
 
