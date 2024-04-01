@@ -25,7 +25,7 @@ INSERT INTO oidc_client (
     -- authorization_grant_types
     'authorization_code',
     -- redirect_uris
-    'http://localhost:3000',
+    'http://localhost:3000/callback',
     -- scopes
     'openid,profile',
     -- client_settings
