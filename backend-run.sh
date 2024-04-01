@@ -24,6 +24,12 @@ echo building post-service
 	./mvnw spring-boot:build-image -DskipTests
 )
 
+echo building like-service
+(
+	cd high-five_like-service
+	./mvnw spring-boot:build-image -DskipTests
+)
+
 echo building user-service
 (
 	cd high-five_user-service
@@ -31,4 +37,4 @@ echo building user-service
 )
 
 echo running high-five backend
-docker compose up --build
+docker compose --compatibility up --build
