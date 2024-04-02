@@ -3,7 +3,7 @@ services:
   db-9000_01:
     build: high-five_db/db-9000_01
     image: singhalmradul/high-five_db-9000_01:0.1.0
-    mem_limit: 512m
+    mem_limit: 256m
     ports:
       - 5432:5432
     networks:
@@ -12,7 +12,7 @@ services:
   db-9000_02:
     build: high-five_db/db-9000_02
     image: singhalmradul/high-five_db-9000_02:0.1.0
-    mem_limit: 512m
+    mem_limit: 256m
     ports:
       - 5433:5432
     networks:
@@ -21,7 +21,7 @@ services:
   db-9000_03-22222_01:
     build: high-five_db/db-9000_03-22222_01
     image: singhalmradul/high-five_db-9000_03-22222_01:0.1.0
-    mem_limit: 512m
+    mem_limit: 256m
     ports:
       - 5434:5432
     networks:
@@ -30,16 +30,16 @@ services:
   db-11111_01:
     build: high-five_db/db-11111_01
     image: singhalmradul/high-five_db-11111_01:0.1.0
-    mem_limit: 512m
+    mem_limit: 256m
     ports:
-      - 9042:9042
+      - 27018:27017
     networks:
       - high-five-network
 
   db-22222_02:
     build: high-five_db/db-22222_02
     image: singhalmradul/high-five_db-22222_02:0.1.0
-    mem_limit: 512m
+    mem_limit: 256m
     ports:
       - 27017:27017
     networks:
@@ -50,14 +50,14 @@ services:
     image: singhalmradul/high-five_db-33333_01:0.1.0
     mem_limit: 512m
     ports:
-      - 9043:9042
+      - 9042:9042
     networks:
       - high-five-network
 
   primary-reverse-proxy:
     build: high-five_primary-reverse-proxy
     image: singhalmradul/high-five_primary-reverse-proxy:0.1.0
-    mem_limit: 1g
+    mem_limit: 768m
     ports:
       - 8080:80
     depends_on:
@@ -68,7 +68,7 @@ services:
 
   service-registry:
     image: singhalmradul/high-five_service-registry:0.1.0
-    mem_limit: 1g
+    mem_limit: 768m
     ports:
       - 8761:8761
     networks:
@@ -76,7 +76,7 @@ services:
 
   authorisation-server:
     image: singhalmradul/high-five_authorization-server:0.1.0
-    mem_limit: 1g
+    mem_limit: 768m
     ports:
       - 9000:9000
     depends_on:
@@ -100,7 +100,7 @@ services:
 
   reverse-proxy:
     image: singhalmradul/high-five_reverse-proxy:0.1.0
-    mem_limit: 1g
+    mem_limit: 768m
     ports:
       - 8765:8765
     depends_on:
@@ -114,24 +114,24 @@ services:
 
   post-service:
     image: singhalmradul/high-five_post-service:0.1.0
-    mem_limit: 1g
+    mem_limit: 768m
     ports:
       - 11111:11111
     depends_on:
       - db-11111_01
       - service-registry
       - user-service
+      - like-service
     environment:
       - EUREKA_URI=http://service-registry:8761/eureka
-      - CASSANDRA_CONTACTPOINTS=db-11111_01
-      - CASSANDRA_PORT=9042
+      - DB_URI=mongodb://db-11111_01:27017/high-five
     networks:
       - high-five-network
     restart: on-failure
 
   like-service:
     image: singhalmradul/high-five_like-service:0.1.0
-    mem_limit: 1g
+    mem_limit: 768m
     ports:
       - 33333:33333
     depends_on:
@@ -148,7 +148,7 @@ services:
 
   user-service:
     image: singhalmradul/high-five_user-service:0.1.0
-    mem_limit: 1g
+    mem_limit: 768m
     ports:
     - 22222:22222
     depends_on:
@@ -160,7 +160,7 @@ services:
       - DB_1_URL=jdbc:postgresql://db-9000_03-22222_01:5432/high-five
       - DB_1_USERNAME=postgres
       - DB_1_PASSWORD=postgres
-      - DB_2_URI=mongodb://db-22222_02:27017/user-service
+      - DB_2_URI=mongodb://db-22222_02:27017/high-five
     networks:
       - high-five-network
 
