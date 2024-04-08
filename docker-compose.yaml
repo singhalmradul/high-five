@@ -138,7 +138,7 @@ services:
       - high-five-network
     restart: on-failure
 
-  follow-service:
+follow-service:
     image: singhalmradul/high-five_follow-service:0.1.0
     mem_limit: 768m
     ports:
