@@ -1,8 +1,0 @@
-BEGIN TRANSACTION;
-
-CREATE TABLE IF NOT EXISTS authority (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    role VARCHAR(15) NOT NULL
-);
-
-COMMIT;

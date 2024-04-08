@@ -1,9 +1,0 @@
-FROM mongo:7.0.6
-
-ENV MONGO_INITDB_DATABASE=high-five
-ENV MONGO_INITDB_USERNAME=mongo
-ENV MONGO_INITDB_PASSWORD=mongo
-
-COPY *.js /docker-entrypoint-initdb.d/
-
-EXPOSE 27017
