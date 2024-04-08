@@ -18,6 +18,12 @@ echo building reverse-proxy
 	./mvnw spring-boot:build-image -DskipTests
 )
 
+echo building follow-service
+(
+	cd high-five_follow-service
+	./mvnw spring-boot:build-image -DskipTests
+)
+
 echo building post-service
 (
 	cd high-five_post-service
