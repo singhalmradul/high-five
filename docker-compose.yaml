@@ -80,6 +80,15 @@ services:
       - high-five-network
     restart: on-failure
 
+  db-44444-01:
+    build: high-five_db/db-44444_01
+    image: singhalmradul/high-five_db-44444_01:0.1.0
+    mem_limit: 512m
+    ports:
+      - 7687:7687
+    networks:
+      - high-five-network
+
   primary-reverse-proxy:
     build: high-five_primary-reverse-proxy
     image: singhalmradul/high-five_primary-reverse-proxy:0.1.0
@@ -157,7 +166,7 @@ services:
     networks:
       - high-five-network
     restart: on-failure
-
+    
   comment-service:
     image: singhalmradul/high-five_comment-service:0.1.0
     mem_limit: 768m
