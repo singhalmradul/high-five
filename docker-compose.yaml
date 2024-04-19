@@ -8,6 +8,7 @@ services:
       - 5432:5432
     networks:
       - high-five-network
+    restart: on-failure
 
   db-9000_02:
     build: high-five_db/db-9000_02
@@ -17,6 +18,7 @@ services:
       - 5433:5432
     networks:
       - high-five-network
+    restart: on-failure
 
   db-9000_03-22222_01:
     build: high-five_db/db-9000_03-22222_01
@@ -26,6 +28,7 @@ services:
       - 5434:5432
     networks:
       - high-five-network
+    restart: on-failure
 
   db-11111_01:
     build: high-five_db/db-11111_01
@@ -35,6 +38,17 @@ services:
       - 27018:27017
     networks:
       - high-five-network
+    restart: on-failure
+
+  db-14641_01:
+    build: high-five_db/db-14641_01
+    image: singhalmradul/high-five_db-14641_01:0.1.0
+    mem_limit: 256m
+    ports:
+      - 27019:27017
+    networks:
+      - high-five-network
+    restart: on-failure
 
   db-22222_02:
     build: high-five_db/db-22222_02
@@ -44,6 +58,7 @@ services:
       - 27017:27017
     networks:
       - high-five-network
+    restart: on-failure
 
   db-33333_01:
     build: high-five_db/db-33333_01
@@ -53,6 +68,17 @@ services:
       - 9042:9042
     networks:
       - high-five-network
+    restart: on-failure
+
+  db-44444-01:
+    build: high-five_db/db-44444_01
+    image: singhalmradul/high-five_db-44444_01:0.1.0
+    mem_limit: 512m
+    ports:
+      - 7687:7687
+    networks:
+      - high-five-network
+    restart: on-failure
 
   db-44444-01:
     build: high-five_db/db-44444_01
@@ -74,6 +100,7 @@ services:
       - reverse-proxy
     networks:
       - high-five-network
+    restart: on-failure
 
   service-registry:
     image: singhalmradul/high-five_service-registry:0.1.0
@@ -82,6 +109,7 @@ services:
       - 8761:8761
     networks:
       - high-five-network
+    restart: on-failure
 
   authorisation-server:
     image: singhalmradul/high-five_authorization-server:0.1.0
@@ -106,6 +134,7 @@ services:
       - DB_3_PASSWORD=postgres
     networks:
       - high-five-network
+    restart: on-failure
 
   reverse-proxy:
     image: singhalmradul/high-five_reverse-proxy:0.1.0
@@ -120,6 +149,7 @@ services:
       - AUTHORIZATION_SERVER_URI=http://authorisation-server:9000
     networks:
       - high-five-network
+    restart: on-failure
 
   post-service:
     image: singhalmradul/high-five_post-service:0.1.0
@@ -129,8 +159,6 @@ services:
     depends_on:
       - db-11111_01
       - service-registry
-      - user-service
-      - like-service
     environment:
       - EUREKA_URI=http://service-registry:8761/eureka
       - DB_URI=mongodb://db-11111_01:27017/high-five
@@ -138,8 +166,24 @@ services:
     networks:
       - high-five-network
     restart: on-failure
+    
+  comment-service:
+    image: singhalmradul/high-five_comment-service:0.1.0
+    mem_limit: 768m
+    ports:
+      - 14641:14641
+    depends_on:
+      - db-14641_01
+      - service-registry
+    environment:
+      - EUREKA_URI=http://service-registry:8761/eureka
+      - DB_URI=mongodb://db-14641_01:27017/high-five
+      - CLOUDINARY_URL=${CLOUDINARY_URL}
+    networks:
+      - high-five-network
+    restart: on-failure
 
-follow-service:
+  follow-service:
     image: singhalmradul/high-five_follow-service:0.1.0
     mem_limit: 768m
     ports:
@@ -190,6 +234,7 @@ follow-service:
       - DB_2_URI=mongodb://db-22222_02:27017/high-five
     networks:
       - high-five-network
+    restart: on-failure
 
 networks:
   high-five-network:

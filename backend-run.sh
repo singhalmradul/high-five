@@ -1,42 +1,52 @@
 #!/bin/bash
 
-echo building service-registry
+echo '\033[1;31m ------------------------------------------------------ \033[1;95m service-registry \033[1;31m ------------------------------------------------------ \033[0m'
 (
 	cd high-five_service-registry
 	./mvnw spring-boot:build-image -DskipTests
 )
 
-echo building authorization-server
+echo '\033[1;31m ------------------------------------------------------ \033[1;95m authorization-server \033[1;31m ------------------------------------------------------ \033[0m'
 (
 	cd high-five_authorization-server
 	./mvnw spring-boot:build-image -DskipTests
 )
 
-echo building reverse-proxy
+echo '\033[1;31m ------------------------------------------------------ \033[1;95m reverse-proxy \033[1;31m ------------------------------------------------------ \033[0m'
 (
 	cd high-five_reverse-proxy
 	./mvnw spring-boot:build-image -DskipTests
 )
 
-echo building follow-service
+
+echo '\033[1;31m ------------------------------------------------------ \033[1;95m follow-service \033[1;31m ------------------------------------------------------ \033[0m'
+
 (
 	cd high-five_follow-service
 	./mvnw spring-boot:build-image -DskipTests
 )
 
-echo building post-service
+
+echo '\033[1;31m ------------------------------------------------------ \033[1;95m post-service \033[1;31m ------------------------------------------------------ \033[0m'
 (
 	cd high-five_post-service
 	./mvnw spring-boot:build-image -DskipTests
 )
 
-echo building like-service
+
+echo '\033[1;31m ------------------------------------------------------ \033[1;95m comment-service \033[1;31m ------------------------------------------------------ \033[0m'
+(
+	cd high-five_comment-service
+	./mvnw spring-boot:build-image -DskipTests
+)
+
+echo '\033[1;31m ------------------------------------------------------ \033[1;95m like-service \033[1;31m ------------------------------------------------------ \033[0m'
 (
 	cd high-five_like-service
 	./mvnw spring-boot:build-image -DskipTests
 )
 
-echo building user-service
+echo '\033[1;31m ------------------------------------------------------ \033[1;95m user-service \033[1;31m ------------------------------------------------------ \033[0m'
 (
 	cd high-five_user-service
 	./mvnw spring-boot:build-image -DskipTests

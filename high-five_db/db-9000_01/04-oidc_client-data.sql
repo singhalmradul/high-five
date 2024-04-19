@@ -15,11 +15,11 @@ INSERT INTO oidc_client (
     -- id
     'aacc0e83-3ad9-4e0d-b7b2-bbf185e9e6da',
     -- client_id
-    'high-five',
+    'react',
     -- client_secret
     'none',
     -- client_name
-    'high-five',
+    'react',
     -- client_authentication_methods
     'none',
     -- authorization_grant_types
