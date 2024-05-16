@@ -210,6 +210,7 @@ services:
       - DB_1_USERNAME=postgres
       - DB_1_PASSWORD=postgres
       - DB_2_URI=mongodb://db-22222_02:27017/high-five
+      - CLOUDINARY_URL=${CLOUDINARY_URL}
     networks:
       - high-five-network
     restart: on-failure

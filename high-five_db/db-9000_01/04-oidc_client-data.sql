@@ -8,6 +8,7 @@ INSERT INTO oidc_client (
     client_authentication_methods,
     authorization_grant_types,
     redirect_uris,
+    post_logout_redirect_uris,
     scopes,
     client_settings,
     token_settings
@@ -25,6 +26,8 @@ INSERT INTO oidc_client (
     -- authorization_grant_types
     'authorization_code',
     -- redirect_uris
+    'http://localhost:3000/callback',
+    -- post_logout_redirect_uris
     'http://localhost:3000/callback',
     -- scopes
     'openid,profile',
