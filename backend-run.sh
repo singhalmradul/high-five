@@ -6,9 +6,9 @@ echo '\033[1;31m ------------------------------------------------------ \033[1;9
 	./mvnw spring-boot:build-image -DskipTests
 )
 
-echo '\033[1;31m ------------------------------------------------------ \033[1;95m authorization-server \033[1;31m ------------------------------------------------------ \033[0m'
+echo '\033[1;31m ------------------------------------------------------ \033[1;95m authorisation-server \033[1;31m ------------------------------------------------------ \033[0m'
 (
-	cd high-five_authorization-server
+	cd high-five_authorisation-server
 	./mvnw spring-boot:build-image -DskipTests
 )
 
