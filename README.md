@@ -51,8 +51,12 @@
     ```
 3. run the following command in `high-five_frontend` directory
     ```
+    npm install
+    ```
+4. run the following command in the `high-five_frontend` directory
+    ```
     npm start
     ```
 ## note:
-- you need to have docker installed along with docker compose plugin to be able to run backend
+- you need to have jdk >= 21 and docker installed along with docker compose plugin to be able to run backend
 - you need to have node and npm installed to be able to run frontend
