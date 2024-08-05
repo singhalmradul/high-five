@@ -80,6 +80,16 @@ services:
       - high-five-network
     restart: on-failure
 
+  rabbit-mq:
+    image: rabbitmq:3
+    # image: singhalmradul/high-five_rabbit-mq:0.1.0
+    mem_limit: 256m
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - high-five-network
+    restart: on-failure
   service-registry:
     image: singhalmradul/high-five_service-registry:0.1.0
     mem_limit: 768m
@@ -98,7 +108,6 @@ services:
       - db-9000_01
       - db-9000_02
       - db-9000_03-22222_01
-      - service-registry
     environment:
       - EUREKA_URI=http://service-registry:8761/eureka
       - DB_1_URL=jdbc:postgresql://db-9000_01:5432/high-five
@@ -110,6 +119,8 @@ services:
       - DB_3_URL=jdbc:postgresql://db-9000_03-22222_01:5432/high-five
       - DB_3_USERNAME=postgres
       - DB_3_PASSWORD=postgres
+      - RABBITMQ_HOST=rabbit-mq
+      - RABBITMQ_PORT=5672
     networks:
       - high-five-network
     restart: on-failure
@@ -121,7 +132,6 @@ services:
       - 8765:8765
     depends_on:
       - service-registry
-      - authorisation-server
     environment:
       - EUREKA_URI=http://service-registry:8761/eureka
       - AUTHORIZATION_SERVER_URI=http://authorisation-server:9000
@@ -136,7 +146,6 @@ services:
       - 11111:11111
     depends_on:
       - db-11111_01
-      - service-registry
     environment:
       - EUREKA_URI=http://service-registry:8761/eureka
       - DB_URI=mongodb://db-11111_01:27017/high-five
@@ -152,7 +161,6 @@ services:
       - 14641:14641
     depends_on:
       - db-14641_01
-      - service-registry
     environment:
       - EUREKA_URI=http://service-registry:8761/eureka
       - DB_URI=mongodb://db-14641_01:27017/high-five
@@ -168,7 +176,6 @@ services:
       - 44444:44444
     depends_on:
       - db-44444-01
-      - service-registry
     environment:
       - EUREKA_URI=http://service-registry:8761/eureka
       - NEO4J_URI=bolt://db-44444-01:7687
@@ -185,8 +192,6 @@ services:
       - 33333:33333
     depends_on:
       - db-33333_01
-      - service-registry
-      - user-service
     environment:
       - EUREKA_URI=http://service-registry:8761/eureka
       - CASSANDRA_CONTACTPOINTS=db-33333_01
@@ -203,7 +208,6 @@ services:
     depends_on:
       - db-9000_03-22222_01
       - db-22222_02
-      - service-registry
     environment:
       - EUREKA_URI=http://service-registry:8761/eureka
       - DB_1_URL=jdbc:postgresql://db-9000_03-22222_01:5432/high-five
@@ -211,6 +215,8 @@ services:
       - DB_1_PASSWORD=postgres
       - DB_2_URI=mongodb://db-22222_02:27017/high-five
       - CLOUDINARY_URL=${CLOUDINARY_URL}
+      - RABBITMQ_HOST=rabbit-mq
+      - RABBITMQ_PORT=5672
     networks:
       - high-five-network
     restart: on-failure
