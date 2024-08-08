@@ -5,7 +5,7 @@
 ## links to repositories
 - [high-five_frontend](https://github.com/singhalmradul/high-five_frontend)
 - [high-five_service-registry](https://github.com/singhalmradul/high-five_service-registry)
-- [high-five_reverse-proxy](https://github.com/singhalmradul/high-five_reverse-proxy)
+- [high-five_api-gateway](https://github.com/singhalmradul/high-five_reverse-proxy)
 - [high-five_authorisation-server](https://github.com/singhalmradul/high-five_authorisation-server)
 - [high-five_user-service](https://github.com/singhalmradul/high-five_user-service)
 - [high-five_post-service](https://github.com/singhalmradul/high-five_post-service)
