@@ -125,8 +125,8 @@ services:
       - high-five-network
     restart: on-failure
 
-  reverse-proxy:
-    image: singhalmradul/high-five_reverse-proxy:0.1.0
+  api-gateway:
+    image: singhalmradul/high-five_api-gateway:0.1.0
     mem_limit: 768m
     ports:
       - 8765:8765

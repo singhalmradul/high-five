@@ -2,10 +2,20 @@
 > high-five
 <img src='high-five_assets/high-five.png'/>
 
+## gallery
+<center>
+<img src='high-five_assets/login.jpeg'/>
+<img src='high-five_assets/profile.jpeg'/>
+<img src='high-five_assets/create-post.jpeg'/>
+<img src='high-five_assets/comment-box.jpeg'/>
+<img src='high-five_assets/comments.jpeg'/>
+<img src='high-five_assets/like.jpeg'/>
+</center>
+
 ## links to repositories
 - [high-five_frontend](https://github.com/singhalmradul/high-five_frontend)
 - [high-five_service-registry](https://github.com/singhalmradul/high-five_service-registry)
-- [high-five_api-gateway](https://github.com/singhalmradul/high-five_reverse-proxy)
+- [high-five_api-gateway](https://github.com/singhalmradul/high-five_api-gateway)
 - [high-five_authorisation-server](https://github.com/singhalmradul/high-five_authorisation-server)
 - [high-five_user-service](https://github.com/singhalmradul/high-five_user-service)
 - [high-five_post-service](https://github.com/singhalmradul/high-five_post-service)
@@ -16,18 +26,16 @@
 ## run backend
 1. clone the above repositories such that the directories form this structure
     ```
-    .
-    └── high-five
-        ├── high-five_authorisation-server
-        ├── high-five_comment-service
-        ├── high-five_follow-service
-        ├── high-five_frontend
-        ├── high-five_like-service
-        ├── high-five_post-service
-        ├── high-five_reverse-proxy
-        ├── high-five_service-registry
-        └── high-five_user-service
-
+    high-five
+    ├── high-five_authorisation-server
+    ├── high-five_comment-service
+    ├── high-five_follow-service
+    ├── high-five_frontend
+    ├── high-five_like-service
+    ├── high-five_post-service
+    ├── high-five_api-gateway
+    ├── high-five_service-registry
+    └── high-five_user-service
     ```
 2. create `.env` file in `high-five` directory
 3. create a cloudinary account at [Cloudinary](https://cloudinary.com/users/register_free)
@@ -60,3 +68,4 @@
 ## note:
 - you need to have jdk >= 17 and docker installed along with docker compose plugin to be able to run backend
 - you need to have node and npm installed to be able to run frontend
+- windows users can make use of AI to get help running the project
