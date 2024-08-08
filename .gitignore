@@ -1,5 +1,6 @@
 high-five*
 .env
+!high-five_db/
 !/high-five_db/**
+!high-five_assets/
 !/high-five_assets/**
-!high-five.png
