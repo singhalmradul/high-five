@@ -53,7 +53,6 @@
 2. add the following entries to `.env` file
     ```
     REACT_APP_BACKEND_URL=http://localhost:8765
-    REACT_APP_AUTH_AUTHORITY=http://localhost:9000
     REACT_APP_AUTH_CLIENT_ID=react
     REACT_APP_AUTH_REDIRECT_URI=http://localhost:3000/callback
     ```
